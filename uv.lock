@@ -786,6 +786,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "numpy" },
     { name = "sentence-transformers" },
 ]
 
@@ -798,6 +799,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard", "strandard"], specifier = ">=0.115.8" },
+    { name = "numpy", specifier = ">=2.2.3" },
     { name = "sentence-transformers", specifier = ">=3.4.1" },
 ]
 
