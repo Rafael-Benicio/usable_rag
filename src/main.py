@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from sentence_transformers import SentenceTransformer, util
 from src.rag_content import load_raw_content
 from src.base_models import QueryRequest
-
+from src.embedding import load_embeddings
 
 app = FastAPI()
 
@@ -10,9 +10,7 @@ documents = load_raw_content()
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-doc_embeddings = {doc.id: model.encode(
-    doc.text, convert_to_tensor=True) for doc in documents}
-
+doc_embeddings = load_embeddings(model)
 
 @app.post("/query")
 def query_rag(request: QueryRequest):
