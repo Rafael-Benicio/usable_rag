@@ -4,6 +4,8 @@ from sentence_transformers import SentenceTransformer, util
 
 app = FastAPI()
 
+
+# Documentos que devem ser puxados de um bancod de dados vetorial, de preferencia já devem estar precaulculados
 documents = [
     {
         "id": 0,
@@ -29,8 +31,10 @@ documents = [
     }
 ]
 
+## Usar aqui a api da OpenIA
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
+## Tá fazendo o embeddin dos documentos, mas como dito, o ideal é que eles já estejam pre calculados no banco vetorial
 doc_embeddings = { doc["id"] : model.encode(doc["text"],convert_to_tensor=True) for doc in documents}
 
 class QueryRequest(BaseModel):
@@ -39,15 +43,20 @@ class QueryRequest(BaseModel):
 
 @app.post("/query")
 def query_rag(request:QueryRequest):
+    # faz o embedding da query pra poder comparar com os valores dos documentos
     query_embeding = model.encode(request.query, convert_to_tensor=True)
     best_doc = {}
+    # Menor valor possivel pra um float no python
     best_score = float("-inf")
 
     for doc in documents:
+        # Calculo de similaridade de cosseno
         score = util.cos_sim(query_embeding, doc_embeddings[doc["id"]])
         if score > best_score:
             best_score = score
             best_doc = doc
     # obtem o documento mais próximos
     doc = {"document": best_doc.get("text")}
+
+    # daqui pra frente você manda o documento pra llm como contexto
     return doc
