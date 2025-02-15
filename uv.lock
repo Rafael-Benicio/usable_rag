@@ -594,6 +594,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pickle4"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "setuptools" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/87/98/d829b49ae19c478e5f6ba333c6d6f86504077e42b6aa64ab61037973f2ae/pickle4-0.0.1.tar.gz", hash = "sha256:23f32ba65d7548fb8490badf3349cfa45abf80e81409e598a10090fb832488df", size = 19126 }
+
+[[package]]
 name = "pillow"
 version = "11.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -786,7 +795,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
-    { name = "numpy" },
+    { name = "pickle4" },
     { name = "sentence-transformers" },
 ]
 
@@ -799,7 +808,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard", "strandard"], specifier = ">=0.115.8" },
-    { name = "numpy", specifier = ">=2.2.3" },
+    { name = "pickle4", specifier = ">=0.0.1" },
     { name = "sentence-transformers", specifier = ">=3.4.1" },
 ]
 
