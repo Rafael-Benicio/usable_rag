@@ -8,3 +8,9 @@ dependencies = [
     "fastapi[standard,strandard]>=0.115.8",
     "sentence-transformers>=3.4.1",
 ]
+
+[tool.uv]
+dev-dependencies = [
+    "autopep8>=2.3.2",
+    "isort>=6.0.0",
+]
