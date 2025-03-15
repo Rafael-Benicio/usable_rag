@@ -10,7 +10,9 @@ documents = load_raw_content()
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-doc_embeddings = load_embeddings(model)
+doc_embeddings = load_embeddings(model, documents)
+
+print("================   RUNNING   ==================")
 
 @app.post("/query")
 def query_rag(request: QueryRequest):
