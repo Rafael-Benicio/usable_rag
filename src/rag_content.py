@@ -1,14 +1,28 @@
+import os
+from typing import List
 from src.base_models import RawContent
 
 
-def load_raw_content() -> [RawContent]:
-    return [
-        RawContent(id=0, text="\
-            É um conceito muito estudado  na psicologia, que diz que se uma pessoa já fez algo que considera bom ou positivo, ela tem uma probabilidade menor de fazer algo positivo logo a seguir\
-            EX : \"Você enquanto anda na rua dá dois reais a um mendigo, se outro mendigo de abordar posteriormente, você tem uma probabilidade menor de dar dois reais a esse segundo mendigo\""),
-        RawContent(id=1, text="\
-            Competitividade é uma variável que incorpora fatores, geralmente associados com o desejo de excelência, em comparação com outros, pelo prazer de competir"),
-        RawContent(id=2, text="\
-            A liquidez das relações, também diz respeito a destruição de protocolos sociais relacionados a criação de laços sociais\
-            Como no caso do mundo contemporâneo, onde os protocolos de frequência e presença foram modificados, de modo que diferente de uma rede social, em uma interação presencial você tem mais dificuldade em se \"Desconectar\""),
-    ]
+def load_raw_content() -> List[RawContent]:
+    return _get_raw_content('./My', 0, depth=0)[1]
+
+
+def _get_raw_content(dir: str, id: int, **kwarg) -> tuple[int, List[RawContent]]:
+    raw_content = []
+
+    for file_name in os.listdir(dir):
+        if os.path.isdir(dir+"/"+file_name):
+            id, ret_raw_content = _get_raw_content(
+                dir+"/"+file_name, id, depth=kwarg.get("depth")+1)
+            raw_content += ret_raw_content
+            continue
+
+        if '.md' not in file_name:
+            continue
+
+        with open(dir+"/"+file_name, "+r") as arq:
+            content = arq.read()
+            raw_content.append(RawContent(id=id, text=content))
+            id += 1
+
+    return id, raw_content
