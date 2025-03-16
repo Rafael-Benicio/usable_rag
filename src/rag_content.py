@@ -21,6 +21,7 @@ def _get_raw_content(dir: str) -> List[RawContent]:
 
         with open(dir+"/"+file_name, "+r") as arq:
             content = arq.read()
-            raw_content.append(RawContent(id=len(raw_content), text=content))
+            raw_content.append(RawContent(
+                id=len(raw_content), title=file_name, text=content))
 
     return raw_content
