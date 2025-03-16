@@ -25,6 +25,6 @@ def query_rag(request: QueryRequest):
         if score > best_score:
             best_score = score
             best_doc = doc
-    doc = {"document": best_doc.text}
+    doc = best_doc
 
     return doc
