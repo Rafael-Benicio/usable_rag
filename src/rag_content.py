@@ -4,16 +4,15 @@ from src.base_models import RawContent
 
 
 def load_raw_content() -> List[RawContent]:
-    return _get_raw_content('./My', 0, depth=0)[1]
+    return _get_raw_content('./My')
 
 
-def _get_raw_content(dir: str, id: int, **kwarg) -> tuple[int, List[RawContent]]:
+def _get_raw_content(dir: str) -> List[RawContent]:
     raw_content = []
 
     for file_name in os.listdir(dir):
         if os.path.isdir(dir+"/"+file_name):
-            id, ret_raw_content = _get_raw_content(
-                dir+"/"+file_name, id, depth=kwarg.get("depth")+1)
+            ret_raw_content = _get_raw_content(dir+"/"+file_name)
             raw_content += ret_raw_content
             continue
 
@@ -22,7 +21,6 @@ def _get_raw_content(dir: str, id: int, **kwarg) -> tuple[int, List[RawContent]]
 
         with open(dir+"/"+file_name, "+r") as arq:
             content = arq.read()
-            raw_content.append(RawContent(id=id, text=content))
-            id += 1
+            raw_content.append(RawContent(id=len(raw_content), text=content))
 
-    return id, raw_content
+    return raw_content
