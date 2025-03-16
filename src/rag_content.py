@@ -3,8 +3,8 @@ from typing import List
 from src.base_models import RawContent
 
 
-def load_raw_content() -> List[RawContent]:
-    return _get_raw_content('./My')
+def load_raw_content(dir: str) -> List[RawContent]:
+    return _get_raw_content(dir)
 
 
 def _get_raw_content(dir: str) -> List[RawContent]:

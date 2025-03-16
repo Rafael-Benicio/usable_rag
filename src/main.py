@@ -6,7 +6,7 @@ from src.embedding import load_embeddings
 
 app = FastAPI()
 
-documents = load_raw_content()
+documents = load_raw_content('./My')
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 

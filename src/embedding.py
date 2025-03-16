@@ -1,9 +1,15 @@
 from os import path
 import pickle
+from typing import List
+
+from sentence_transformers import SentenceTransformer
+
+from src.base_models import RawContent
 
 EMBEDDINGS_FILE = 'embeddings.npy'
 
-def load_embeddings(model, documents):
+
+def load_embeddings(model: SentenceTransformer, documents: List[RawContent]) -> dict:
     doc_embeddings = None
     if path.isfile(EMBEDDINGS_FILE):
         with open(EMBEDDINGS_FILE, "rb") as bin_data:
